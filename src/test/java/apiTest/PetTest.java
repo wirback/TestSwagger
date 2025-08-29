@@ -4,21 +4,17 @@ import apiTest.mapper.JsonConverter;
 import apiTest.model.Pet;
 import apiTest.specification.Specification;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @Tag("pet")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@DisplayName("Testing Pet Entity")
+@DisplayName("Тестирование сущности Pet")
 final class PetTest {
-    private static RequestSpecification requestSpecification;
-    private static final String RES_PATH = "src/test/resources/";
     private static final String BASE_URL = "https://petstore.swagger.io/v2";
     private static final String PET_URL = "/pet";
     private static final String PET_ID_URL = "/pet/{id}";
@@ -29,7 +25,8 @@ final class PetTest {
     @BeforeAll
     static void prepare() {
         Specification.initializeSpecification(Specification.requestSpec(BASE_URL));
-        petExpected = JsonConverter.jsonToObject(new File(RES_PATH + "pet_body_create.json"), Pet.class);
+        petExpected = JsonConverter.jsonToObject(
+                new File("src/test/resources/pet_body_create.json"), Pet.class);
     }
 
     @Test
