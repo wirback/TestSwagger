@@ -1,0 +1,18 @@
+{
+  "id": 2100500,
+  "category": {
+    "id": 2100500,
+    "name": "cat"
+  },
+  "name": "Kitty-kat",
+  "photoUrls": [
+    "string"
+  ],
+  "tags": [
+    {
+      "id": 2100500,
+      "name": "Chocolate"
+    }
+  ],
+  "status": "available"
+}

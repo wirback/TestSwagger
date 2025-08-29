@@ -1,0 +1,118 @@
+package apiTest;
+
+import apiTest.mapper.JsonConverter;
+import apiTest.model.Pet;
+import apiTest.specification.Specification;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+import org.junit.jupiter.api.*;
+
+import java.io.File;
+
+import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+@Tag("pet")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DisplayName("Testing Pet Entity")
+final class PetTest {
+    private static RequestSpecification requestSpecification;
+    private static final String RES_PATH = "src/test/resources/";
+    private static final String BASE_URL = "https://petstore.swagger.io/v2";
+    private static final String PET_URL = "/pet";
+    private static final String PET_ID_URL = "/pet/{id}";
+    private static Pet petExpected;
+    private Pet petActual;
+    private static final String EXPECTED_NAME = "Kit-Kat";
+
+    @BeforeAll
+    static void prepare() {
+        Specification.initializeSpecification(Specification.requestSpec(BASE_URL));
+        petExpected = JsonConverter.jsonToObject(new File(RES_PATH + "pet_body_create.json"), Pet.class);
+    }
+
+    @Test
+    @Order(1)
+    @Tag("added")
+    @DisplayName("Создать нового питомца")
+    void addedPetTest() {
+        petActual = given()
+                .body(petExpected)
+                .expect().statusCode(200)
+                .when()
+                .post(PET_URL)
+                .then().log().status().and().log().body()
+                .extract().as(Pet.class);
+    }
+
+    @Test
+    @Order(2)
+    @Tag("added")
+    @DisplayName("Проверить, что питомец успешно создан")
+    void checkSuccessfulCreationPetTest() {
+        petActual = given()
+                .expect().statusCode(200)
+                .when()
+                .get(PET_ID_URL, petExpected.getId())
+                .then().log().status().and().log().body()
+                .extract().as(Pet.class);
+
+        assertEquals(petExpected.getId(), petActual.getId());
+    }
+
+    @Test
+    @Order(3)
+    @Tag("update")
+    @DisplayName("Изменить данные питомца")
+    void updateDataPetTest() {
+        petExpected.setName(EXPECTED_NAME);
+        petActual = given()
+                .body(petExpected)
+                .expect().statusCode(200)
+                .when()
+                .put(PET_URL)
+                .then().log().status().and().log().body()
+                .extract().as(Pet.class);
+    }
+
+    @Test
+    @Order(4)
+    @Tag("update")
+    @DisplayName("Проверить, что изменения успешно применены")
+    void checkSuccessfulUpdateDataPetTest() {
+        petActual = given()
+                .expect().statusCode(200)
+                .when()
+                .get(PET_ID_URL, petExpected.getId())
+                .then().log().status().and().log().body()
+                .extract().as(Pet.class);
+        assertEquals(EXPECTED_NAME, petActual.getName());
+    }
+
+    @Test
+    @Order(5)
+    @Tag("delete")
+    @DisplayName("Удалить питомца")
+    void deletePetTest() {
+        given()
+                .pathParam("id", petExpected.getId())
+                .expect().statusCode(200)
+                .when()
+                .delete(PET_ID_URL, petExpected.getId())
+                .then().log().status();
+    }
+
+    @Test
+    @Order(6)
+    @Tag("delete")
+    @DisplayName("Проверить, что питомец удален")
+    void checkSuccessfulDeletePetTest() {
+        Response response = given()
+                .expect().statusCode(404)
+                .when()
+                .get(PET_ID_URL, petExpected.getId())
+                .then().log().status().and().log().body()
+                .extract().response();
+    }
+}
