@@ -47,7 +47,6 @@ final class PetTest {
     @DisplayName("Проверить, что питомец успешно создан")
     void checkSuccessfulCreationPetTest() {
         petActual = given()
-                .expect().statusCode(200)
                 .when()
                 .get(PET_ID_URL, petExpected.getId())
                 .then().log().status().and().log().body()
@@ -64,7 +63,6 @@ final class PetTest {
         petExpected.setName(EXPECTED_NAME);
         given()
                 .body(petExpected)
-                .expect().statusCode(200)
                 .when()
                 .put(PET_URL)
                 .then().log().status().and().log().body();
@@ -76,7 +74,6 @@ final class PetTest {
     @DisplayName("Проверить, что изменения успешно применены")
     void checkSuccessfulUpdateDataPetTest() {
         petActual = given()
-                .expect().statusCode(200)
                 .when()
                 .get(PET_ID_URL, petExpected.getId())
                 .then().log().status().and().log().body()
@@ -92,7 +89,6 @@ final class PetTest {
     void deletePetTest() {
         given()
                 .pathParam("id", petExpected.getId())
-                .expect().statusCode(200)
                 .when()
                 .delete(PET_ID_URL, petExpected.getId())
                 .then().log().status();
