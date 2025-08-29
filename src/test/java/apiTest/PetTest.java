@@ -88,7 +88,6 @@ final class PetTest {
     @DisplayName("Удалить питомца")
     void deletePetTest() {
         given()
-                .pathParam("id", petExpected.getId())
                 .when()
                 .delete(PET_ID_URL, petExpected.getId())
                 .then().log().status();
