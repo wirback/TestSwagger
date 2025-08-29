@@ -3,7 +3,6 @@ package apiTest;
 import apiTest.mapper.JsonConverter;
 import apiTest.model.Pet;
 import apiTest.specification.Specification;
-import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
@@ -24,7 +23,7 @@ final class PetTest {
 
     @BeforeAll
     static void prepare() {
-        Specification.initializeSpecification(Specification.requestSpec(BASE_URL));
+        Specification.initSpec(Specification.requestSpec(BASE_URL));
         petExpected = JsonConverter.jsonToObject(
                 new File("src/test/resources/pet_body_create.json"), Pet.class);
     }
@@ -34,13 +33,12 @@ final class PetTest {
     @Tag("added")
     @DisplayName("Создать нового питомца")
     void addedPetTest() {
-        petActual = given()
+        given()
                 .body(petExpected)
                 .expect().statusCode(200)
                 .when()
                 .post(PET_URL)
-                .then().log().status().and().log().body()
-                .extract().as(Pet.class);
+                .then().log().status().and().log().body();
     }
 
     @Test
@@ -64,16 +62,15 @@ final class PetTest {
     @DisplayName("Изменить данные питомца")
     void updateDataPetTest() {
         petExpected.setName(EXPECTED_NAME);
-        petActual = given()
+        given()
                 .body(petExpected)
                 .expect().statusCode(200)
                 .when()
                 .put(PET_URL)
-                .then().log().status().and().log().body()
-                .extract().as(Pet.class);
+                .then().log().status().and().log().body();
     }
 
-    @Test
+    @RepeatedTest(value = 5, name = RepeatedTest.LONG_DISPLAY_NAME)
     @Order(4)
     @Tag("update")
     @DisplayName("Проверить, что изменения успешно применены")
@@ -84,6 +81,7 @@ final class PetTest {
                 .get(PET_ID_URL, petExpected.getId())
                 .then().log().status().and().log().body()
                 .extract().as(Pet.class);
+
         assertEquals(EXPECTED_NAME, petActual.getName());
     }
 
@@ -100,16 +98,15 @@ final class PetTest {
                 .then().log().status();
     }
 
-    @Test
+    @RepeatedTest(value = 5, name = RepeatedTest.LONG_DISPLAY_NAME)
     @Order(6)
     @Tag("delete")
     @DisplayName("Проверить, что питомец удален")
     void checkSuccessfulDeletePetTest() {
-        Response response = given()
+        given()
                 .expect().statusCode(404)
                 .when()
                 .get(PET_ID_URL, petExpected.getId())
-                .then().log().status().and().log().body()
-                .extract().response();
+                .then().log().status().and().log().body();
     }
 }
