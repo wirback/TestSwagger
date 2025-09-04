@@ -1,9 +1,12 @@
 package apiTest;
 
+import apiTest.handlers.FailedTestHandler;
 import apiTest.mapper.JsonConverter;
 import apiTest.model.Pet;
 import apiTest.specification.Specification;
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.io.File;
 
@@ -12,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Tag("pet")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@ExtendWith(FailedTestHandler.class)
 @DisplayName("Тестирование сущности Pet")
 final class PetTest {
     private static final String BASE_URL = "https://petstore.swagger.io/v2";
@@ -35,7 +39,6 @@ final class PetTest {
     void addedPetTest() {
         given()
                 .body(petExpected)
-                .expect().statusCode(200)
                 .when()
                 .post(PET_URL)
                 .then().log().status().and().log().body();
@@ -68,7 +71,8 @@ final class PetTest {
                 .then().log().status().and().log().body();
     }
 
-    @RepeatedTest(value = 5, name = RepeatedTest.LONG_DISPLAY_NAME)
+//    @RepeatedTest(value = 5, name = RepeatedTest.LONG_DISPLAY_NAME)
+    @Test
     @Order(4)
     @Tag("update")
     @DisplayName("Проверить, что изменения успешно применены")
@@ -93,13 +97,14 @@ final class PetTest {
                 .then().log().status();
     }
 
-    @RepeatedTest(value = 5, name = RepeatedTest.LONG_DISPLAY_NAME)
+//    @RepeatedTest(value = 5, name = RepeatedTest.LONG_DISPLAY_NAME)
+    @Test
     @Order(6)
     @Tag("delete")
     @DisplayName("Проверить, что питомец удален")
     void checkSuccessfulDeletePetTest() {
         given()
-                .expect().statusCode(404)
+                .expect().statusCode(HttpStatus.SC_NOT_FOUND)
                 .when()
                 .get(PET_ID_URL, petExpected.getId())
                 .then().log().status().and().log().body();

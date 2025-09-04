@@ -5,6 +5,7 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
+import org.apache.http.HttpStatus;
 
 public class Specification {
     public static RequestSpecification requestSpec(String baseUrl) {
@@ -17,7 +18,7 @@ public class Specification {
     public static void initSpec(RequestSpecification request) {
         RestAssured.requestSpecification = request;
         RestAssured.responseSpecification = new ResponseSpecBuilder()
-                .expectStatusCode(200)
+                .expectStatusCode(HttpStatus.SC_OK)
                 .build();
     }
 }

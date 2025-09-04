@@ -2,7 +2,7 @@ package apiTest.model;
 
 import java.util.ArrayList;
 
-public class Pet {
+public class Pet implements Entity {
     private Integer id;
     private Category category;
     private String name;
