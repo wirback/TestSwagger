@@ -1,13 +1,13 @@
-package apiTest.model;
+package ru.dmitriiladnov.model;
 
-public class Category {
+public class Tag {
     private Integer id;
     private String name;
 
-    public Category() {
+    public Tag() {
     }
 
-    public Category(Integer id, String name) {
+    public Tag(Integer id, String name) {
         this.id = id;
         this.name = name;
     }

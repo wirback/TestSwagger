@@ -2,7 +2,7 @@ package apiTest;
 
 import apiTest.handlers.FailedTestHandler;
 import apiTest.mapper.JsonConverter;
-import apiTest.model.Pet;
+import ru.dmitriiladnov.model.Pet;
 import apiTest.specification.Specification;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.*;

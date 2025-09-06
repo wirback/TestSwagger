@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AmplicodeJpaDataSourceConfig">
+    <data-sources>
+      <data-source id="bb43415a-1100-45e8-b0c8-a2fe3f3422d1" name="TestSwagger" url="jdbc:postgresql://localhost/test" driverClass="org.postgresql.Driver" />
+    </data-sources>
+  </component>
+</project>

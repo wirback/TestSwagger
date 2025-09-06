@@ -1,4 +1,4 @@
-package apiTest.model;
+package ru.dmitriiladnov.model;
 
 import java.util.ArrayList;
 

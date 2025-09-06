@@ -13,7 +13,6 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <ver.lombok>1.18.38</ver.lombok>
         <ver.assured>5.5.6</ver.assured>
         <ver.junit>5.13.4</ver.junit>
         <ver.jackson>2.20.0-rc1</ver.jackson>
@@ -40,12 +39,11 @@
             <artifactId>jackson-databind</artifactId>
             <version>${ver.jackson}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>7.11.0</version>
-            <scope>test</scope>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.7</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
         <dependency>
@@ -54,11 +52,17 @@
             <version>4.35.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.codeborne/selenide -->
-        <dependency>
-            <groupId>com.codeborne</groupId>
-            <artifactId>selenide</artifactId>
-            <version>7.10.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.codeborne</groupId>-->
+<!--            <artifactId>selenide</artifactId>-->
+<!--            <version>7.10.0</version>-->
+<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
+<!--        <dependency>-->
+<!--            <groupId>io.github.bonigarcia</groupId>-->
+<!--            <artifactId>webdrivermanager</artifactId>-->
+<!--            <version>6.3.1</version>-->
+<!--        </dependency>-->
     </dependencies>
 
 </project>
