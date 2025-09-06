@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 import java.util.Properties;
 
 public final class Util {
@@ -19,6 +20,7 @@ public final class Util {
 
         } catch (IOException e) {
             e.printStackTrace();
+//            throw new InputMismatchException(e.getMessage());
         }
     }
 

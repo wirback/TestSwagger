@@ -1,6 +1,6 @@
 package apiTest.mapper;
 
-import ru.dmitriiladnov.model.Entity;
+import apiTest.model.Entity;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
