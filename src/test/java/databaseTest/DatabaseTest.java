@@ -45,6 +45,7 @@ final class DatabaseTest {
     @Order(3)
     @DisplayName("Удаление данных из БД")
     void deletingDataFromDatabase() {
+        service.deletePetById(generatedId);
         assertNotEquals(null, service.getPetById(generatedId).getId());
     }
 
