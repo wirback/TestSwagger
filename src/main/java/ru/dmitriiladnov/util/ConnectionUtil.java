@@ -5,26 +5,25 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.InputMismatchException;
 import java.util.Properties;
 
-public final class Util {
+public final class ConnectionUtil {
     private static final Properties PROPERTIES = new Properties();
 
     static {
-        try(InputStream inputStream = Util.class
+        try(InputStream inputStream = ConnectionUtil.class
                 .getClassLoader()
                 .getResourceAsStream("connectDB.properties"))
         {
             PROPERTIES.load(inputStream);
 
         } catch (IOException e) {
-            e.printStackTrace();
-//            throw new InputMismatchException(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
-    private Util() {}
+    private ConnectionUtil() {
+    }
 
     public static Connection getConnection() {
         try {
@@ -34,9 +33,7 @@ public final class Util {
                     PROPERTIES.getProperty("db.password")
             );
         } catch (SQLException e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-
-        return null;
     }
 }

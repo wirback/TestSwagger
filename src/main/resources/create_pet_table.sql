@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS pet_table(
+pet_id BIGINT GENERATED ALWAYS AS IDENTITY,
+pet_name VARCHAR(30),
+pet_category VARCHAR(30)
+);

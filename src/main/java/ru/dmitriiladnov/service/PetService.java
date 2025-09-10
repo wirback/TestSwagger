@@ -1,8 +1,8 @@
-package ru.dmitriiladnov.dao;
+package ru.dmitriiladnov.service;
 
 import ru.dmitriiladnov.model.Pet;
 
-public interface PetDao {
+public interface PetService {
     void createPetTable();
     void dropPetTable();
     Long createPet(Pet pet);
